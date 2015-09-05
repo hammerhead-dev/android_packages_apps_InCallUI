@@ -431,13 +431,13 @@ public class ContactInfoCache implements ContactsAsyncHelper.OnImageLoadComplete
 
                     // Display a geographical description string if available
                     // (but only for incoming calls.)
-                    if (isIncoming) {
+                    //if (isIncoming) {
                         // TODO (CallerInfoAsyncQuery cleanup): Fix the CallerInfo
                         // query to only do the geoDescription lookup in the first
                         // place for incoming calls.
                         displayLocation = info.geoDescription; // may be null
                         Log.d(TAG, "Geodescrption: " + info.geoDescription);
-                    }
+                    //}
 
                     Log.d(TAG, "  ==>  no name; falling back to number:"
                             + " displayNumber '" + Log.pii(displayNumber)
@@ -456,7 +456,10 @@ public class ContactInfoCache implements ContactsAsyncHelper.OnImageLoadComplete
                 } else {
                     displayName = info.name;
                     displayNumber = number;
-                    label = info.phoneLabel;
+                    displayLocation = info.geoDescription;
+                    if (!TextUtils.isEmpty(displayLocation)) {
+                        label = displayLocation + "  ";
+                    }
                     Log.d(TAG, "  ==>  name is present in CallerInfo: displayName '" + displayName
                             + "', displayNumber '" + displayNumber + "'");
                 }
