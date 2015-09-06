@@ -328,9 +328,9 @@ public class CallerInfo {
      * @param context To lookup the localized 'Emergency Number' string.
      * @return this instance.
      */
-    /* package */ CallerInfo markAsEmergency(Context context) {
+    /* package */ CallerInfo markAsEmergency(Context context, String number) {
         name = context.getString(R.string.emergency_call_dialog_number_for_display);
-        phoneNumber = null;
+        phoneNumber = number;
 
         photoResource = R.drawable.img_phone;
         mIsEmergency = true;
