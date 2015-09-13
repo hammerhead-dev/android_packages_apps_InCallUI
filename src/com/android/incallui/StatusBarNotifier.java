@@ -404,10 +404,14 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener {
                 && !call.can(android.telecom.Call.Details.CAPABILITY_GENERIC_CONFERENCE)) {
             return mContext.getResources().getString(R.string.card_title_conf_call);
         }
-        if (TextUtils.isEmpty(contactInfo.name)) {
+        if (TextUtils.isEmpty(contactInfo.name) && TextUtils.isEmpty(contactInfo.location)) {
             return TextUtils.isEmpty(contactInfo.number) ? null
                     : BidiFormatter.getInstance().unicodeWrap(
                             contactInfo.number.toString(), TextDirectionHeuristics.LTR);
+        } else if (TextUtils.isEmpty(contactInfo.name) && !TextUtils.isEmpty(contactInfo.location)) {
+            return contactInfo.number + "    " + contactInfo.location;
+        } else if (!TextUtils.isEmpty(contactInfo.name) && !TextUtils.isEmpty(contactInfo.location)) {
+            return contactInfo.name + "    " + contactInfo.location;
         }
         return contactInfo.name;
     }
