@@ -452,7 +452,7 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
         if (call.isConferenceCall() && !call.hasProperty(Details.PROPERTY_GENERIC_CONFERENCE)) {
             return mContext.getResources().getString(R.string.card_title_conf_call);
         }
-        if (TextUtils.isEmpty(contactInfo.name)) {
+        if (TextUtils.isEmpty(contactInfo.name) && TextUtils.isEmpty(contactInfo.location)) {
             String contactNumberDisplayed = TextUtils.isEmpty(contactInfo.number) ?
                     "" : contactInfo.number.toString();
             if (mContext.getResources().
@@ -463,6 +463,10 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
             return TextUtils.isEmpty(contactNumberDisplayed) ? null
                     : BidiFormatter.getInstance().unicodeWrap(
                     contactNumberDisplayed, TextDirectionHeuristics.LTR);
+        } else if (TextUtils.isEmpty(contactInfo.name) && !TextUtils.isEmpty(contactInfo.location)) {
+            return contactInfo.number + "    " + contactInfo.location;
+        } else if (!TextUtils.isEmpty(contactInfo.name) && !TextUtils.isEmpty(contactInfo.location)) {
+            return contactInfo.name + "    " + contactInfo.location;
         }
 
         return contactInfo.name;
